@@ -12,6 +12,14 @@ type ShortURLController struct {
 	beego.Controller
 }
 
+type RedirectController struct {
+	beego.Controller
+}
+
+type HomeController struct {
+	beego.Controller
+}
+
 // @Title Create
 // @Description create ShortURL
 // @Param	url		formData 	string	true		"The full URL"
@@ -46,4 +54,16 @@ func (ctl *ShortURLController) Get() {
 	beego.Debug(surl)
 	ctl.Data["json"]=surl
 	ctl.ServeJSON()
+}
+
+func (ctl *RedirectController) Get(){
+	code := ctl.GetString(":code")
+	surl := &models.SURL{ShortCode:code}
+	surl.Get()
+	ctl.Redirect(surl.LongURL ,302)
+}
+
+func (ctl *HomeController)Get(){
+	beego.Debug("HomeController")
+	ctl.TplName = "index.html"
 }

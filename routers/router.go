@@ -22,4 +22,6 @@ func init() {
 		),
 	)
 	beego.AddNamespace(ns)
+	beego.Router("/:code([0-9a-zA-Z]+)", &controllers.RedirectController{})
+	beego.Router("/", &controllers.HomeController{})
 }
