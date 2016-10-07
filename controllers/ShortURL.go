@@ -25,7 +25,7 @@ type HomeController struct {
 // @Param	url		formData 	string	true		"The full URL"
 // @Success 200 {object} models.SURL
 // @Failure 403 body is empty
-// @router /shorturl [post]
+// @router / [post]
 func (ctl *ShortURLController) Post() {
 	longurl := ctl.GetString("url")
 	_,err :=url.Parse(longurl)
@@ -46,7 +46,7 @@ func (ctl *ShortURLController) Post() {
 // @Param	code		path 	string	true		"The short code"
 // @Success 200 {object} models.SURL
 // @Failure 403 body is empty
-// @router /shorturl/:code [get]
+// @router /:code [get]
 func (ctl *ShortURLController) Get() {
 	code := ctl.GetString(":code")
 	surl := &models.SURL{ShortCode:code}

@@ -2,9 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>hello</title>
+    <title>短域名</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
 </head>
 <body>
+<div >
+    <input v-model="fullurl">
+    <button @click="postfullurl">压缩</button>
+    <br>
+    <template v-if="shorturl">
+        <a :href='window.location.origin + "/"+ shorturl.ShortCode'></a>
+        <a :href="shorturl.LongURL"></a>
+    </template>
 
+</div><!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: 'body',
+        data: {
+            fullurl: 'https://if.run/',
+            shorturl: null,
+        },
+        methods:{
+            postfullurl:function(){
+                console.log(this.fullurl)
+                var data = new FormData()
+                data.append('url',this.fullurl)
+                fetch("/v1/shorturl/",{
+                    method:"post",
+                    body:data
+                }).then(function(resp) {
+                    return resp.json()
+                })
+                  .then(function(json){
+                    this.shorturl = json
+                    console.log(this.shorturl)
+                })
+            }
+        }
+    })
+</script>
 </body>
+
 </html>
