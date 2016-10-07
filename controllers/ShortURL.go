@@ -17,7 +17,7 @@ type ShortURLController struct {
 // @Param	url		formData 	string	true		"The full URL"
 // @Success 200 {object} models.SURL
 // @Failure 403 body is empty
-// @router / [post]
+// @router /shorturl [post]
 func (ctl *ShortURLController) Post() {
 	longurl := ctl.GetString("url")
 	_,err :=url.Parse(longurl)
@@ -27,6 +27,22 @@ func (ctl *ShortURLController) Post() {
 	}
 	surl := &models.SURL{LongURL:longurl}
 	surl.Save()
+	beego.Debug(surl)
+	ctl.Data["json"]=surl
+	ctl.ServeJSON()
+}
+
+
+// @Title Get
+// @Description get ShortURL
+// @Param	code		path 	string	true		"The short code"
+// @Success 200 {object} models.SURL
+// @Failure 403 body is empty
+// @router /shorturl/:code [get]
+func (ctl *ShortURLController) Get() {
+	code := ctl.GetString(":code")
+	surl := &models.SURL{ShortCode:code}
+	surl.Get()
 	beego.Debug(surl)
 	ctl.Data["json"]=surl
 	ctl.ServeJSON()
