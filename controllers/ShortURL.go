@@ -60,7 +60,7 @@ func (ctl *RedirectController) Get(){
 	code := ctl.GetString(":code")
 	surl := &models.SURL{ShortCode:code}
 	surl.Get()
-	ctl.Redirect(surl.LongURL ,302)
+	ctl.Redirect(surl.LongURL ,301)
 }
 
 func (ctl *HomeController)Get(){
