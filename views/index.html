@@ -13,6 +13,8 @@
         <a :href='codeurl(shorturl.ShortCode)'>{{codeurl(shorturl.ShortCode)}}</a>
         <br>
         <a :href="shorturl.LongURL">{{shorturl.LongURL}}</a>
+        <br>
+        <img :src="qrurl(shorturl.ShortCode)">
     </template>
 
 </div>
@@ -27,6 +29,9 @@
         methods:{
             codeurl:function(code){
                 return window.location.origin + "/"+ code
+            },
+            qrurl:function(code){
+                return window.location.origin + "/v1/shorturl/"+ code + "/qr"
             },
             postfullurl:function(){
                 console.log(this.fullurl)
